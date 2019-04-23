@@ -1,3 +1,6 @@
+import firebase from 'firebase';
+import {Actions} from 'react-native-router-flux';
+
 export const setNome = (novoNome) => (
     {
         type: 'set-nome',
@@ -18,3 +21,22 @@ export const setSenha = (novaSenha) => (
         payload: novaSenha
     }
 )
+
+export const cadastrarUsuario = (usuario) => {
+    return dispatch => {
+         firebase.auth()
+            .createUserWithEmailAndPassword(usuario.email, usuario.senha)
+            .then(usuarioCriado => {
+                dispatch({
+                    type: 'cadastrar-usuario-sucesso',
+                    payload: usuario
+                })
+
+                Actions.cadastroSucesso();
+            })
+            .catch(erro => dispatch({
+                type: 'cadastrar-usuario-erro',
+                payload: erro
+            }));
+    }
+}

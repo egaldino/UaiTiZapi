@@ -1,7 +1,8 @@
 const INITIAL_STATE = {
     nome: '',
     email: '',
-    senha: ''
+    senha: '',
+    mensagemErro: ''
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -16,5 +17,14 @@ export default (state = INITIAL_STATE, action) => {
     if(action.type == 'set-senha'){
         return {...state, senha: action.payload};
     }
+
+    if(action.type == 'cadastrar-usuario-sucesso'){
+       return {...state, mensagemErro: '', nome: '', senha: ''};
+    }
+
+    if(action.type == 'cadastrar-usuario-erro'){
+        return {...state, mensagemErro: action.payload.message};
+    }
+
     return state;
 }

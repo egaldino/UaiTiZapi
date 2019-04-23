@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {
     StyleSheet,
     View, 
@@ -15,51 +15,59 @@ import {setEmail, setSenha} from '../actions/AutenticacaoAction'
 
 const imgBackground = require('../imgs/bg.png');
 
-const component = props => (
-<Image style={{flex: 1, width: null}} source={imgBackground}>
-    <View style={styles.container}>
-        <View style={styles.topo}>
-            <Text style={styles.titulo}>UaiTiZapi</Text>
-        </View>
-        
-        <View style={styles.camposFormulario}>
-            <TextInput 
-                style={styles.txtInput}
-                placeholder='E-mail' 
-                textContentType='emailAddress'
-                autoComplete='email'
-                keyboardType='email-address'
-                value={props.email}
-                placeholderTextColor = '#BCBDBD'
-                underlineColorAndroid='#BCBDBD'
-                onChangeText={(email) => props.setEmail(email)}/>
+class FormLogin extends Component {
+    constructor(props){
+        super(props);
+    }
 
-            <TextInput
-                style={styles.txtInput} 
-                placeholder='Senha' 
-                textContentType='password'
-                autoComplete='password'
-                secureTextEntry
-                value={props.senha}
-                placeholderTextColor = '#BCBDBD'
-                underlineColorAndroid='#BCBDBD'
-                onChangeText={(senha) => props.setSenha(senha)} />
-            
-            <TouchableHighlight opacity={0.9} underlayColor='#115E54' onPress={()=> Actions.formCadastro()}>
-                <Text style={styles.txtCadastrar}>Ainda não tem cadastro? Cadastre-se</Text>
-            </TouchableHighlight>
-        </View>
+    render(){
+        return (
+            <Image style={{flex: 1, width: null}} source={imgBackground}>
+                <View style={styles.container}>
+                    <View style={styles.topo}>
+                        <Text style={styles.titulo}>UaiTiZapi</Text>
+                    </View>
+                    
+                    <View style={styles.camposFormulario}>
+                        <TextInput 
+                            style={styles.txtInput}
+                            placeholder='E-mail' 
+                            textContentType='emailAddress'
+                            autoComplete='email'
+                            keyboardType='email-address'
+                            value={this.props.email}
+                            placeholderTextColor = '#BCBDBD'
+                            underlineColorAndroid='#BCBDBD'
+                            onChangeText={(email) => this.props.setEmail(email)}/>
 
-        <View style={styles.containerBotao}>
-            <Button
-                onPress={() => false}
-                color='#115E54'
-                title="Acessar"
-                accessibilityLabel="Acessar"/>
-        </View>
-    </View>
-</Image>
-);
+                        <TextInput
+                            style={styles.txtInput} 
+                            placeholder='Senha' 
+                            textContentType='password'
+                            autoComplete='password'
+                            secureTextEntry
+                            value={this.props.senha}
+                            placeholderTextColor = '#BCBDBD'
+                            underlineColorAndroid='#BCBDBD'
+                            onChangeText={(senha) => this.props.setSenha(senha)} />
+                        
+                        <TouchableHighlight opacity={0.9} underlayColor='#115E54' onPress={()=> Actions.formCadastro()}>
+                            <Text style={styles.txtCadastrar}>Ainda não tem cadastro? Cadastre-se</Text>
+                        </TouchableHighlight>
+                    </View>
+
+                    <View style={styles.containerBotao}>
+                        <Button
+                            onPress={() => false}
+                            color='#115E54'
+                            title="Acessar"
+                            accessibilityLabel="Acessar"/>
+                    </View>
+                </View>
+            </Image>
+            );
+    }
+}
 
 const styles = StyleSheet.create({
     container : {
@@ -101,6 +109,6 @@ const mapStateToProps = state =>(
     }
 )
 
-const FormLogin = connect(mapStateToProps, {setEmail, setSenha})(component);
+const component = connect(mapStateToProps, {setEmail, setSenha})(FormLogin);
 
-export {FormLogin};
+export {component as FormLogin};
