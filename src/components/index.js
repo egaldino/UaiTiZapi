@@ -2,3 +2,4 @@
 export * from './FormLogin';
 export * from './FormCadastro';
 export * from './CadastroSucesso';
+export * from './Home';

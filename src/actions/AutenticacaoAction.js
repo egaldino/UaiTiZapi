@@ -1,24 +1,31 @@
 import firebase from 'firebase';
 import {Actions} from 'react-native-router-flux';
 import b64 from 'base-64';
+import {SET_NOME, 
+        SET_EMAIL, 
+        SET_SENHA, 
+        CADASTRAR_USUARIO_SUCESSO, 
+        CADASTRAR_USUARIO_ERRO, 
+        LOGAR_USUARIO_SUCESSO, 
+        LOGAR_USUARIO_ERRO } from './types';
 
 export const setNome = (novoNome) => (
     {
-        type: 'set-nome',
+        type: SET_NOME,
         payload: novoNome
     }
 )
 
 export const setEmail = (novoEmail) => (
     {
-        type: 'set-email',
+        type: SET_EMAIL,
         payload: novoEmail
     }
 )
 
 export const setSenha = (novaSenha) => (
     {
-        type: 'set-senha',
+        type: SET_SENHA,
         payload: novaSenha
     }
 )
@@ -33,7 +40,7 @@ export const cadastrarUsuario = (usuario) => {
                         .ref(`/contatos/${emailB64}`)
                         .push({nome: usuario.nome})
                         .then(value => dispatch({
-                                            type: 'cadastrar-usuario-sucesso',
+                                            type: CADASTRAR_USUARIO_SUCESSO,
                                             payload: usuario
                                        })
                         )
@@ -41,7 +48,7 @@ export const cadastrarUsuario = (usuario) => {
                 Actions.cadastroSucesso();
             })
             .catch(erro => dispatch({
-                type: 'cadastrar-usuario-erro',
+                type: CADASTRAR_USUARIO_ERRO,
                 payload: erro.message
             }));
     }
@@ -53,14 +60,14 @@ export const logarUsuario = (usuario) =>{
             .signInWithEmailAndPassword(usuario.email, usuario.senha)
             .then(value => {
                 dispatch({
-                    type: 'logar-usuario-sucesso',
+                    type: LOGAR_USUARIO_SUCESSO,
                     payload: usuario
                 })
 
-                Actions.cadastroSucesso();
+                Actions.home();
             })
             .catch(erro => dispatch({
-                type: 'logar-usuario-erro',
+                type: LOGAR_USUARIO_ERRO,
                 payload: erro.message
             })) 
     }
