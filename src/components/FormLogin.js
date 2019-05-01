@@ -11,13 +11,21 @@ import {
 import {Actions} from 'react-native-router-flux';
 import {connect} from 'react-redux';
 
-import {setEmail, setSenha} from '../actions/AutenticacaoAction'
+import {setEmail, setSenha, logarUsuario} from '../actions/AutenticacaoAction';
+
+import Usuario from '../models/Usuario';
 
 const imgBackground = require('../imgs/bg.png');
 
 class FormLogin extends Component {
     constructor(props){
         super(props);
+    }
+
+    _logarUsuario(){
+        const {email, senha} = this.props;
+        const usuario = new Usuario(null, email, senha);
+        this.props.logarUsuario(usuario);
     }
 
     render(){
@@ -55,10 +63,12 @@ class FormLogin extends Component {
                             <Text style={styles.txtCadastrar}>Ainda não tem cadastro? Cadastre-se</Text>
                         </TouchableHighlight>
                     </View>
-
+                    <View style={{flex: 1}} >
+                        <Text style={styles.msgErro}>{this.props.mensagemErroLogin}</Text>
+                    </View>
                     <View style={styles.containerBotao}>
                         <Button
-                            onPress={() => false}
+                            onPress={() => this._logarUsuario()}
                             color='#115E54'
                             title="Acessar"
                             accessibilityLabel="Acessar"/>
@@ -99,16 +109,20 @@ const styles = StyleSheet.create({
     },
     containerBotao: {
         flex: 2
+    },
+    msgErro:{
+        color: 'red'
     }
 });
 
 const mapStateToProps = state =>(
     {
         email: state.AutenticacaoReducer.email,
-        senha: state.AutenticacaoReducer.senha
+        senha: state.AutenticacaoReducer.senha,
+        mensagemErroLogin: state.AutenticacaoReducer.mensagemErroLogin
     }
 )
 
-const component = connect(mapStateToProps, {setEmail, setSenha})(FormLogin);
+const component = connect(mapStateToProps, {setEmail, setSenha, logarUsuario})(FormLogin);
 
 export {component as FormLogin};

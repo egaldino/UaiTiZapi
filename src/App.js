@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {View, StatusBar} from 'react-native';
 import {Provider} from 'react-redux';
 import {createStore, applyMiddleware} from 'redux';
 import ReduxThunk from 'redux-thunk';
@@ -27,9 +28,12 @@ class App extends Component {
 
     render(){
         return (
-            <Provider store={createStore(reducers, {}, applyMiddleware(ReduxThunk))}>
-                <Routes />
-            </Provider>
+            <View style={{flex: 1}}>
+                <StatusBar backgroundColor='#0c423b' barStyle='light-content'/>
+                <Provider store={createStore(reducers, {}, applyMiddleware(ReduxThunk))}>
+                    <Routes />
+                </Provider>
+            </View>
         );
     }
 }
