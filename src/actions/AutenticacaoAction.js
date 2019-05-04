@@ -7,7 +7,8 @@ import {SET_NOME,
         CADASTRAR_USUARIO_SUCESSO, 
         CADASTRAR_USUARIO_ERRO, 
         LOGAR_USUARIO_SUCESSO, 
-        LOGAR_USUARIO_ERRO } from './types';
+        LOGAR_USUARIO_ERRO,
+        EXIBIR_LOADING_AUTENTICACAO } from './types';
 
 export const setNome = (novoNome) => (
     {
@@ -32,6 +33,10 @@ export const setSenha = (novaSenha) => (
 
 export const cadastrarUsuario = (usuario) => {
     return dispatch => {
+        dispatch({
+            type: EXIBIR_LOADING_AUTENTICACAO
+        });
+
          firebase.auth()
             .createUserWithEmailAndPassword(usuario.email, usuario.senha)
             .then(usuarioCriado => {
@@ -56,6 +61,10 @@ export const cadastrarUsuario = (usuario) => {
 
 export const logarUsuario = (usuario) =>{
     return dispatch => {
+        dispatch({
+            type: EXIBIR_LOADING_AUTENTICACAO
+        });
+
         firebase.auth()
             .signInWithEmailAndPassword(usuario.email, usuario.senha)
             .then(value => {

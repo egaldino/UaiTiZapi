@@ -6,7 +6,8 @@ import {
     Button,
     TextInput,
     TouchableHighlight,
-    Image
+    Image,
+    ActivityIndicator
 } from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import {connect} from 'react-redux';
@@ -26,6 +27,20 @@ class FormLogin extends Component {
         const {email, senha} = this.props;
         const usuario = new Usuario(null, email, senha);
         this.props.logarUsuario(usuario);
+    }
+
+    _renderBtnAcessar(){
+        if(this.props.loadingAutenticacao){
+            return (<ActivityIndicator size='large' color='white'/>)
+        }
+        
+        return (
+            <Button
+                            onPress={() => this._logarUsuario()}
+                            color='#115E54'
+                            title="Acessar"
+                            accessibilityLabel="Acessar"/>
+        )
     }
 
     render(){
@@ -67,11 +82,7 @@ class FormLogin extends Component {
                         <Text style={styles.msgErro}>{this.props.mensagemErroLogin}</Text>
                     </View>
                     <View style={styles.containerBotao}>
-                        <Button
-                            onPress={() => this._logarUsuario()}
-                            color='#115E54'
-                            title="Acessar"
-                            accessibilityLabel="Acessar"/>
+                        {this._renderBtnAcessar()}
                     </View>
                 </View>
             </Image>
@@ -119,7 +130,8 @@ const mapStateToProps = state =>(
     {
         email: state.AutenticacaoReducer.email,
         senha: state.AutenticacaoReducer.senha,
-        mensagemErroLogin: state.AutenticacaoReducer.mensagemErroLogin
+        mensagemErroLogin: state.AutenticacaoReducer.mensagemErroLogin,
+        loadingAutenticacao: state.AutenticacaoReducer.loadingAutenticacao
     }
 )
 
