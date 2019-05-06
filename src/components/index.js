@@ -3,3 +3,7 @@ export * from './FormLogin';
 export * from './FormCadastro';
 export * from './CadastroSucesso';
 export * from './Home';
+export * from './TabBarMenu';
+export * from './Contatos';
+export * from './Mensagens';
+export * from './AdicionarContato';

@@ -1,13 +1,7 @@
 import React, {Component} from 'react';
 import { View, StyleSheet, Dimensions } from 'react-native';
 import { TabViewAnimated, TabBar, SceneMap } from 'react-native-tab-view';
-
-const FirstRoute = () => (
-  <View style={[styles.scene, { backgroundColor: '#ff4081' }]} />
-);
-const SecondRoute = () => (
-  <View style={[styles.scene, { backgroundColor: '#673ab7' }]} />
-);
+import {TabBarMenu, Contatos, Mensagens} from './'
 
 class Home extends Component {
   state = {
@@ -20,7 +14,7 @@ class Home extends Component {
 
   _handleChangeTab = index => this.setState({index});
 
-  _renderHeader = props => <TabBar {...props}/>;
+  _renderHeader = props => <TabBarMenu {...props}/>;
 
   render() {
     return (
@@ -28,8 +22,8 @@ class Home extends Component {
         style={styles.scene}
         navigationState={this.state}
         renderScene={SceneMap({
-          '1': FirstRoute,
-          '2': SecondRoute,
+          '1': Mensagens,
+          '2': Contatos,
         })}
         renderHeader={this._renderHeader}
         onRequestChangeTab={this._handleChangeTab}
