@@ -6,3 +6,4 @@ export const CADASTRAR_USUARIO_ERRO = 'cadastrar-usuario-erro';
 export const LOGAR_USUARIO_SUCESSO = 'logar-usuario-sucesso';
 export const LOGAR_USUARIO_ERRO = 'logar-usuario-erro';
 export const EXIBIR_LOADING_AUTENTICACAO = 'exibir_loading_autenticacao';
+export const SET_ADD_CONTATO_EMAIL = 'set_add_contato_email'

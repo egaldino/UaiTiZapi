@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import {StyleSheet, View, Text, TextInput, Image, Button} from 'react-native';
+import {connect} from 'react-redux';
+import {setEmail} from '../actions/AdicionaContatoAction'
 
 const imgBackground = require('../imgs/bg.png');
 
@@ -31,10 +33,10 @@ class AdicionarContato extends Component {
                             textContentType='emailAddress'
                             autoComplete='email'
                             keyboardType='email-address'
-                            value={''}
+                            value={this.props.email}
                             placeholderTextColor = '#BCBDBD'
                             underlineColorAndroid='#BCBDBD'
-                            onChangeText={(email) => false}/>
+                            onChangeText={(email) => this.props.setEmail(email)}/>
                     </View>
                     <View style={{flex: 1}} >
                         <Text style={styles.msgErro}>{this.props.mensagemErro}</Text>
@@ -70,4 +72,11 @@ const styles = StyleSheet.create({
     }
 });
 
-export {AdicionarContato};
+const mapStateToProps = state =>(
+    {
+        email: state.AppReducer.emailNovoContato
+    }
+)
+
+const component = connect(mapStateToProps, {setEmail})(AdicionarContato);
+export {component as AdicionarContato};
