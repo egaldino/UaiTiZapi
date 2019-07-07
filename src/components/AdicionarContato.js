@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {StyleSheet, View, Text, TextInput, Image, Button} from 'react-native';
 import {connect} from 'react-redux';
-import {setEmail} from '../actions/AdicionaContatoAction'
+import {setEmail, adicionaContato} from '../actions/AdicionaContatoAction'
 
 const imgBackground = require('../imgs/bg.png');
 
@@ -18,7 +18,7 @@ class AdicionarContato extends Component {
         return (<Button
                             color='#115E54' 
                             title='Adicionar' 
-                            onPress={() => false}/>);
+                            onPress={() => this.props.adicionaContato(this.props.email)}/>);
     }
 
     render(){
@@ -74,9 +74,10 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state =>(
     {
-        email: state.AppReducer.emailNovoContato
+        email: state.AppReducer.emailNovoContato,
+        mensagemErro: state.AppReducer.mensagemErro
     }
 )
 
-const component = connect(mapStateToProps, {setEmail})(AdicionarContato);
+const component = connect(mapStateToProps, {setEmail, adicionaContato})(AdicionarContato);
 export {component as AdicionarContato};
