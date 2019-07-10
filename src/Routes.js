@@ -17,7 +17,6 @@ export default () =>(
                 title="UaiTiZapi" 
                 type="reset" 
                 hideNavBar={false} 
-                initial
                 renderRightButton={ ()=> <IconesHomeBar />}
                 />
         <Scene key="adicionarContato" component={AdicionarContato} title="Adicionar Contato" hideNavBar={false}/>

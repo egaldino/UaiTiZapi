@@ -10,11 +10,7 @@ class AdicionarContato extends Component {
         super(props);
     }
 
-    _renderBtnCadastrar(){
-        if(false){
-            return (<ActivityIndicator size='large' color='white'/>)
-        }
-        
+    _renderBtnCadastrar(){        
         return (<Button
                             color='#115E54' 
                             title='Adicionar' 

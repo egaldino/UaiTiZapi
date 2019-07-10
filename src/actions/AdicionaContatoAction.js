@@ -1,7 +1,8 @@
 import firebase from 'firebase';
 import b64 from 'base-64';
+import _ from 'lodash';
 
-import {SET_ADD_CONTATO_EMAIL, ADD_CONTATO_ERRO } from './types';
+import {SET_ADD_CONTATO_EMAIL, ADD_CONTATO_SUCESSO, ADD_CONTATO_ERRO } from './types';
 
 export const setEmail = (novoEmail) => (
     {
@@ -12,12 +13,22 @@ export const setEmail = (novoEmail) => (
 
 export const adicionaContato = contatoEmail => {
     return dispatch => {
-        let emailBase64 = b64.encode(contatoEmail);
-        _verificaSeContatoExiste(emailBase64).then(contatoExiste => {
-            if(contatoExiste){
-                dispatch({
-                    type: ADD_CONTATO_SUCESSO
+        const emailBase64 = b64.encode(contatoEmail);
+        _verificaSeContatoExiste(emailBase64).then(contato => {
+            if(contato){
+                const {currentUser} = firebase.auth();
+                const emailAutenticadoBase64 = b64.encode(currentUser.email);
+
+                firebase.database().ref(`/usuario_contatos/${emailAutenticadoBase64}`).push({
+                    email: contatoEmail, nome: contato.nome
                 })
+                .then(() => {
+                    dispatch({
+                        type: ADD_CONTATO_SUCESSO
+                    })
+                })
+                .catch(error => console.log(error));
+                
             } else {
                 dispatch({
                     type: ADD_CONTATO_ERRO,
@@ -33,7 +44,8 @@ const _verificaSeContatoExiste = email => firebase.database()
                                                 .once('value')
                                                 .then(snapshot => {
                                                     if(snapshot.val()){
-                                                        return true;
+                                                        return _.first(_.values(snapshot.val()));
                                                     }
-                                                    return false;
-                                                });
+                                                    return null;
+                                                })
+                                                .catch(error => console.log(error));
