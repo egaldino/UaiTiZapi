@@ -8,8 +8,8 @@ const INITIAL_STATE = {
 export default (state = INITIAL_STATE, action) => {
     switch(action.type){
         case SET_ADD_CONTATO_EMAIL: return {...state, emailNovoContato: action.payload};
-        case ADD_CONTATO_SUCESSO: return {...state, mensagemErro: ''};
-        case ADD_CONTATO_ERRO: return {...state, mensagemErro: action.payload};
+        case ADD_CONTATO_SUCESSO: return {...state, mensagemSucesso: action.payload, mensagemErro: null, emailNovoContato: ''};
+        case ADD_CONTATO_ERRO: return {...state, mensagemErro: action.payload,  mensagemSucesso: null};
         default: return state
     }
 }

@@ -1,9 +1,12 @@
 import React from 'react';
 import {View, StyleSheet, Image, Text, TouchableHighlight} from 'react-native';
-import {Router, Stack, Scene, Actions} from 'react-native-router-flux';
+import {Router, Scene, Actions} from 'react-native-router-flux';
+import {connect} from 'react-redux';
 import {FormLogin, FormCadastro, CadastroSucesso, Home, AdicionarContato} from './components';
+import {limpaMensagemSucesso} from './actions/AdicionaContatoAction';
 
-export default () =>(
+
+const Routes = props =>(
     <Router navigationBarStyle={styles.navigationBar} 
             titleStyle={styles.navigationBarTitle} 
             leftButtonIconStyle={styles.navigationBackIcon}>
@@ -17,7 +20,7 @@ export default () =>(
                 title="UaiTiZapi" 
                 type="reset" 
                 hideNavBar={false} 
-                renderRightButton={ ()=> <IconesHomeBar />}
+                renderRightButton={ ()=> <IconesHomeBar limpaMensagemSucesso={props.limpaMensagemSucesso}/>}
                 />
         <Scene key="adicionarContato" component={AdicionarContato} title="Adicionar Contato" hideNavBar={false}/>
     </Router>
@@ -25,7 +28,7 @@ export default () =>(
 
 const IconesHomeBar = props => (
     <View style={{width: 60, flexDirection: 'row', justifyContent: 'space-between'}}>
-        <TouchableHighlight onPress={() => Actions.adicionarContato()} underlayColor='#114D44'>
+        <TouchableHighlight onPress={() => irParaAdicionarContato(props.limpaMensagemSucesso)} underlayColor='#114D44'>
             <Image source={require('./imgs/adicionar-contato.png')}/>
         </TouchableHighlight>
 
@@ -59,3 +62,11 @@ const styles = StyleSheet.create({
         fontWeight: 'bold'
     }  
 });
+
+function irParaAdicionarContato(callbefore) {
+    callbefore();
+    return Actions.adicionarContato();
+}
+
+const component = connect(null, {limpaMensagemSucesso})(Routes);
+export default component;

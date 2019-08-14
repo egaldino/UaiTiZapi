@@ -22,20 +22,22 @@ export const adicionaContato = contatoEmail => {
                 firebase.database().ref(`/usuario_contatos/${emailAutenticadoBase64}`).push({
                     email: contatoEmail, nome: contato.nome
                 })
-                .then(() => {
-                    dispatch({
-                        type: ADD_CONTATO_SUCESSO
-                    })
-                })
-                .catch(error => console.log(error));
+                .then(() => adicionaContatoSucesso(dispatch, 'Contato adicionado com sucesso'))
+                .catch(erro =>  adicionaContatoErro(dispatch, erro.message));
                 
             } else {
-                dispatch({
-                    type: ADD_CONTATO_ERRO,
-                    payload: 'Contato não existe'
-                }) 
+                adicionaContatoErro(dispatch, 'Contato não existe')
             }
         });
+    }
+}
+
+export const limpaMensagemSucesso = () =>{ 
+    return dispatch => {
+        dispatch({
+            type: ADD_CONTATO_SUCESSO,
+            payload: null
+        }) 
     }
 }
 
@@ -49,3 +51,16 @@ const _verificaSeContatoExiste = email => firebase.database()
                                                     return null;
                                                 })
                                                 .catch(error => console.log(error));
+
+const adicionaContatoSucesso = (dispatch, msg) => {
+    dispatch({
+        type: ADD_CONTATO_SUCESSO,
+        payload: msg
+    }) 
+}
+
+const adicionaContatoErro = (dispatch, msg) => 
+dispatch({
+    type: ADD_CONTATO_ERRO,
+    payload: msg
+})
