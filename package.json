@@ -11,7 +11,7 @@
 		"firebase": "^5.10.0",
 		"lodash": "^4.17.14",
 		"react": "16.0.0-alpha.6",
-		"react-native": "0.44.0",
+		"react-native": "0.70.2",
 		"react-native-router-flux": "^3.38.0",
 		"react-native-tab-view": "0.0.65",
 		"react-redux": "^5.0.4",
